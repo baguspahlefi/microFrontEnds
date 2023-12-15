@@ -8,12 +8,12 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CrudComponent implements OnInit {
 
-  public todos: any[] = [];
+  public datas: any[] = [];
   public post: any;
   public updatedPost: any = {};
   public loading = true;
   public showInput = false;
-  public selectedTodoId: number | null = null;
+  public selectedDataId: number | null = null;
   public titleError: string | null = null;
   public bodyError: string | null = null;
 
@@ -35,7 +35,7 @@ export class CrudComponent implements OnInit {
   ngOnInit() {
     this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(
       (data: any) => {
-        this.todos = data;
+        this.datas = data;
         this.loading = false;
       },
       (error) => {
@@ -47,14 +47,14 @@ export class CrudComponent implements OnInit {
 
 
 
-  addTodo() {
+  addData() {
 
     this.titleInput.nativeElement.value = '';
     this.bodyInput.nativeElement.value = '';
     this.showInput = false;
   }
 
-  submitTodo() {
+  submitData() {
     const title = this.titleInput.nativeElement.value;
     const body = this.bodyInput.nativeElement.value;
 
@@ -68,14 +68,14 @@ export class CrudComponent implements OnInit {
     this.titleError = null;
     this.bodyError = null;
 
-    
-    const newTodo = {
+
+    const newData = {
       title: this.titleInput.nativeElement.value,
       body: this.bodyInput.nativeElement.value,
       userId: 1,
     };
 
-    this.http.post('https://jsonplaceholder.typicode.com/posts', newTodo).subscribe(
+    this.http.post('https://jsonplaceholder.typicode.com/posts', newData).subscribe(
       (response) => {
         console.log('Data berhasil ditambah:', response);
         this.post = response;
@@ -91,11 +91,11 @@ export class CrudComponent implements OnInit {
     this.showInput = false;
   }
 
-  openUpdateModal(todoId: number) {
-    this.selectedTodoId = todoId;
+  openUpdateModal(dataId: number) {
+    this.selectedDataId = dataId;
   }
 
-  submitTodoUpdate() {
+  submitDataUpdate() {
     const title = this.titleInput.nativeElement.value;
     const body = this.bodyInput.nativeElement.value;
 
@@ -109,19 +109,19 @@ export class CrudComponent implements OnInit {
     this.titleError = null;
     this.bodyError = null;
 
-    if (this.selectedTodoId) {
+    if (this.selectedDataId) {
       const updatedTodo = {
         title: this.titleInput.nativeElement.value,
         body: this.bodyInput.nativeElement.value,
         userId: 1,
       };
   
-      this.http.put(`https://jsonplaceholder.typicode.com/posts/${this.selectedTodoId}`, updatedTodo)
+      this.http.put(`https://jsonplaceholder.typicode.com/posts/${this.selectedDataId}`, updatedTodo)
         .subscribe(
           (response) => {
             console.log('Data berhasil diupdate:', response);
             this.refreshData();
-            $(`#basicModal-${this.selectedTodoId}`).modal('hide');
+            $(`#basicModal-${this.selectedDataId}`).modal('hide');
           },
           (error) => {
             console.error('Error mengupdate data', error);
@@ -132,16 +132,16 @@ export class CrudComponent implements OnInit {
       this.titleInput.nativeElement.value = '';
       this.bodyInput.nativeElement.value = '';
       this.showInput = false;
-      this.selectedTodoId = null; 
+      this.selectedDataId = null; 
     } else {
-      this.addTodo();
+      this.addData();
     }
   }
 
   refreshData() {
     this.http.get('https://jsonplaceholder.typicode.com/posts').subscribe(
       (data: any) => {
-        this.todos = data;
+        this.datas = data;
       },
       (error) => {
         console.error(error);
@@ -149,16 +149,16 @@ export class CrudComponent implements OnInit {
     );
   }
 
-  deleteTodo(todoId: number) {
-    this.http.delete(`https://jsonplaceholder.typicode.com/posts/${todoId}`,{ observe: 'response' })
+  deleteTodo(dataId: number) {
+    this.http.delete(`https://jsonplaceholder.typicode.com/posts/${dataId}`,{ observe: 'response' })
       .subscribe(
         (response) => {
-          console.log(`Data ID ${todoId} berhasil dihapus`+ `Status :` + response.status);
+          console.log(`Data ID ${dataId} berhasil dihapus`+ `Status :` + response.status);
           // Remove the deleted todo from the local array
-          this.todos = this.todos.filter(todo => todo.id !== todoId);
+          this.datas = this.datas.filter(data => data.id !== dataId);
         },
         (error) => {
-          console.error(error `${todoId}`);
+          console.error(error `${dataId}`);
         }
       );
   }
