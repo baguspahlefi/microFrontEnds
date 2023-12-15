@@ -11,6 +11,10 @@ const routes: Routes = [
   {
     path: "chart-list",
     loadChildren: () => import('mfe/ChartModule').then(m => m.ChartModule),
+  },
+  {
+    path: "crud",
+    loadChildren: () => import('mfe2/CrudModule').then(m => m.CrudModule),
   }
 ];
 

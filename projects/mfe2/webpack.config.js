@@ -2,9 +2,11 @@ const { shareAll, withModuleFederationPlugin } = require('@angular-architects/mo
 
 module.exports = withModuleFederationPlugin({
 
-  remotes: {
-    mfe: 'http://localhost:3000/remoteEntry.js',
-    mfe2: 'http://localhost:4000/remoteEntry.js',    
+  name: 'mfe2',
+
+  exposes: {
+    './Component': './projects/mfe2/src/app/app.component.ts',
+    './CrudModule': './projects/mfe2/src/app/crud/crud.module.ts',
   },
 
   shared: {
