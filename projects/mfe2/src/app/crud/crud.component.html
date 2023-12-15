@@ -1,8 +1,110 @@
+<!-- app-todo-list.component.html -->
 <main id="main" class="main">
-    <div class="pagetitle">
-      <h1>CRUD</h1>
-      <button class="btn btn-primary">asdasd</button>
-    </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2>Data dari endpoint</h2>
+        <button class="btn btn-primary float-end" (click)="toggleInput()">
+          Add Data
+        </button>
+      </div>
 
-  </main>
-  
+      <div *ngIf="showInput">
+        <label for="title">Title</label>
+        <input
+          #titleInput
+          class="form-control"
+          placeholder="Masukkan Title"
+          (keyup.enter)="addTodo()"
+        />
+
+        <label for="body">Body</label>
+        <input
+          #bodyInput
+          class="form-control"
+          placeholder="Masukkan Body"
+          (keyup.enter)="addTodo()"
+        />
+
+        <button class="btn btn-success mt-2" (click)="submitTodo()">
+          Submit Todo
+        </button>
+      </div>
+
+      <div
+        *ngIf="loading; else loadedContent"
+        class="spinner-border"
+        role="status"
+      >
+        <span class="visually-hidden">Loading...</span>
+      </div>
+
+      <ng-template class="mt-4" #loadedContent>
+        <table class="table mt-4">
+          <!-- Added margin-top class -->
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Body</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let todo of todos">
+              <td>{{ todo.id }}</td>
+              <td>{{ todo.title }}</td>
+              <td>{{ todo.body }}</td>
+              <td class="text-nowrap">
+                <button
+                  class="btn btn-warning btn-sm me-2"
+                  (click)="openUpdateModal(todo.id)"
+                  data-bs-toggle="modal"
+                  [attr.data-bs-target]="'#basicModal-' + todo.id"
+
+                >
+                  <i class="bi bi-pencil"></i>
+                </button>
+                <button class="btn btn-danger btn-sm" (click)="deleteTodo(todo.id)">
+                  <i class="bi bi-trash"></i>
+                </button>
+              </td>
+
+              <div class="modal fade" id="basicModal-{{todo.id}}" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Update data id {{todo.id}}</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <label for="updateTitle">Update Title</label>
+                      <input #titleInput id="updateTitle" name="updateTitle" class="form-control" [(ngModel)]="updatedPost.title">
+                      <div *ngIf="titleError" class="text-danger">{{ titleError }}</div>
+                                      
+                      <label for="updateBody">Update Body</label>
+                      <input #bodyInput id="updateBody" name="updateBody" class="form-control" [(ngModel)]="updatedPost.body">
+                      <div *ngIf="bodyError" class="text-danger">{{ bodyError }}</div>
+                              
+                      <button type="submit" class="btn btn-primary my-3" data-bs-dismiss="modal" (click)="submitTodoUpdate()">Update Data</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </tr>
+            <tr *ngIf="post">
+              <td>{{ post.id }}</td>
+              <td>{{ post.title }}</td>
+              <td>{{ post.body }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </ng-template>
+    </div>
+  </div>
+</main>

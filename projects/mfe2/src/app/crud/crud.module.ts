@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CrudComponent } from './crud.component';
 import { RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -13,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     HttpClientModule,
+    FormsModule,
     RouterModule.forChild([
       {path: "", component:CrudComponent, pathMatch:"full"}
       ])
