@@ -30,9 +30,15 @@
 							"projects/shell/src/assets"
 						],
 						"styles": [
-							"projects/shell/src/styles.scss"
+							"projects/shell/src/styles.scss",
+							"projects/shell/src/assets/css/style.css",
+							"node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
 						],
-						"scripts": [],
+						"scripts": [
+							"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+							"projects/shell/src/assets/js/main.js"
+						],
 						"extraWebpackConfig": "projects/shell/webpack.config.js",
 						"commonChunk": false
 					},
@@ -103,9 +109,15 @@
 							"projects/shell/src/assets"
 						],
 						"styles": [
-							"projects/shell/src/styles.scss"
+							"projects/shell/src/styles.scss",
+							"projects/shell/src/assets/css/style.css",
+							"node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
 						],
-						"scripts": []
+						"scripts": [
+							"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+							"projects/shell/src/assets/js/main.js"
+						]
 					}
 				}
 			}
@@ -137,9 +149,15 @@
 							"projects/mfe/src/assets"
 						],
 						"styles": [
-							"projects/mfe/src/styles.scss"
+							"projects/mfe/src/styles.scss",
+							"projects/mfe/src/assets/css/style.css",
+							"node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
 						],
-						"scripts": [],
+						"scripts": [
+							"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+							"projects/mfe/src/assets/js/main.js"
+						],
 						"extraWebpackConfig": "projects/mfe/webpack.config.js",
 						"commonChunk": false
 					},
@@ -210,9 +228,15 @@
 							"projects/mfe/src/assets"
 						],
 						"styles": [
-							"projects/mfe/src/styles.scss"
+							"projects/mfe/src/styles.scss",
+							"projects/mfe/src/assets/css/style.css",
+							"node_modules/bootstrap/dist/css/bootstrap.min.css",
+							"node_modules/bootstrap-icons/font/bootstrap-icons.min.css"
 						],
-						"scripts": []
+						"scripts": [
+							"node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+							"projects/mfe/src/assets/js/main.js"
+						]
 					}
 				}
 			}
