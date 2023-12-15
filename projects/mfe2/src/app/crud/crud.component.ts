@@ -49,6 +49,12 @@ export class CrudComponent implements OnInit {
 
   addTodo() {
 
+    this.titleInput.nativeElement.value = '';
+    this.bodyInput.nativeElement.value = '';
+    this.showInput = false;
+  }
+
+  submitTodo() {
     const title = this.titleInput.nativeElement.value;
     const body = this.bodyInput.nativeElement.value;
 
@@ -62,12 +68,7 @@ export class CrudComponent implements OnInit {
     this.titleError = null;
     this.bodyError = null;
 
-    this.titleInput.nativeElement.value = '';
-    this.bodyInput.nativeElement.value = '';
-    this.showInput = false;
-  }
-
-  submitTodo() {
+    
     const newTodo = {
       title: this.titleInput.nativeElement.value,
       body: this.bodyInput.nativeElement.value,
