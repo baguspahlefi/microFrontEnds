@@ -61,43 +61,16 @@
                 <button
                   class="btn btn-warning btn-sm me-2"
                   (click)="openUpdateModal(data.id)"
-                  data-bs-toggle="modal"
-                  [attr.data-bs-target]="'#basicModal-' + data.id"
-
                 >
                   <i class="bi bi-pencil"></i>
                 </button>
-                <button class="btn btn-danger btn-sm" (click)="deleteTodo(data.id)">
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="deleteTodo(data.id)"
+                >
                   <i class="bi bi-trash"></i>
                 </button>
               </td>
-
-              <div class="modal fade" id="basicModal-{{data.id}}" tabindex="-1">
-                <div class="modal-dialog">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title">Update data id {{data.id}}</h5>
-                      <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                      ></button>
-                    </div>
-                    <div class="modal-body">
-                      <label for="updateTitle">Update Title</label>
-                      <input #titleInput id="updateTitle" name="updateTitle" class="form-control" [(ngModel)]="updatedPost.title">
-                      <div *ngIf="titleError" class="text-danger">{{ titleError }}</div>
-                                      
-                      <label for="updateBody">Update Body</label>
-                      <input #bodyInput id="updateBody" name="updateBody" class="form-control" [(ngModel)]="updatedPost.body">
-                      <div *ngIf="bodyError" class="text-danger">{{ bodyError }}</div>
-                              
-                      <button type="submit" class="btn btn-primary my-3" data-bs-dismiss="modal" (click)="submitDataUpdate()">Update Data</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </tr>
             <tr *ngIf="post">
               <td>{{ post.id }}</td>
@@ -106,6 +79,48 @@
             </tr>
           </tbody>
         </table>
+      </ng-template>
+      <ng-template #modalUpdate let-modal>
+        
+        <div class="modal-header">
+          <h4 class="modal-title" id="modal-basic-title">Data update</h4>
+          <button
+            type="button"
+            class="btn-close"
+            aria-label="Close"
+            (click)="modal.dismiss('Cross click')"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="updateTitle">Title</label>
+            <input
+              id="updateTitle"
+              name="updateTitle"
+              class="form-control mb-3"
+              [(ngModel)]="updatedPost.title"
+            />
+            <div *ngIf="titleError" class="text-danger">{{ titleError }}</div>
+            <label for="updateBody">Body</label>
+            <input
+              id="updateBody"
+              name="updateBody"
+              class="form-control"
+              [(ngModel)]="updatedPost.body"
+            />
+            <div *ngIf="bodyError" class="text-danger">{{ bodyError }}</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-outline-dark"
+            (click)="submitDataUpdate(modal)"
+          >
+            Save
+          </button>
+        </div>
+        
       </ng-template>
     </div>
   </div>

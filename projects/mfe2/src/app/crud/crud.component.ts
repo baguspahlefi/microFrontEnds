@@ -1,13 +1,15 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, NgModule, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-crud',
   templateUrl: './crud.component.html',
   styleUrls: ['./crud.component.scss']
 })
-export class CrudComponent implements OnInit {
 
+export class CrudComponent implements OnInit {
+  
   public datas: any[] = [];
   public post: any;
   public updatedPost: any = {};
@@ -19,6 +21,7 @@ export class CrudComponent implements OnInit {
 
   @ViewChild('titleInput') titleInput!: ElementRef;
   @ViewChild('bodyInput') bodyInput!: ElementRef;
+  @ViewChild('modalUpdate') modalUpdate!: TemplateRef<any>;
 
   constructor(private http: HttpClient) {}
 
@@ -91,13 +94,18 @@ export class CrudComponent implements OnInit {
     this.showInput = false;
   }
 
+  private modalService = inject(NgbModal);
+	closeResult = '';
   openUpdateModal(dataId: number) {
     this.selectedDataId = dataId;
+    console.log(dataId)
+
+    const modalRef = this.modalService.open(this.modalUpdate, { ariaLabelledBy: 'modal-basic-title' });
   }
 
-  submitDataUpdate() {
-    const title = this.titleInput.nativeElement.value;
-    const body = this.bodyInput.nativeElement.value;
+  submitDataUpdate(modal : NgbModalRef) {
+    const title = this.updatedPost.title;
+    const body = this.updatedPost.body;
 
     if (!title || !body) {
       this.titleError = !title ? 'Title is required.' : null;
@@ -110,27 +118,28 @@ export class CrudComponent implements OnInit {
     this.bodyError = null;
 
     if (this.selectedDataId) {
-      const updatedTodo = {
-        title: this.titleInput.nativeElement.value,
-        body: this.bodyInput.nativeElement.value,
+      const updateData = {
+        title: this.updatedPost.title,
+        body: this.updatedPost.body,
         userId: 1,
       };
   
-      this.http.put(`https://jsonplaceholder.typicode.com/posts/${this.selectedDataId}`, updatedTodo)
+      this.http.put(`https://jsonplaceholder.typicode.com/posts/${this.selectedDataId}`, updateData)
         .subscribe(
           (response) => {
             console.log('Data berhasil diupdate:', response);
             this.refreshData();
-            $(`#basicModal-${this.selectedDataId}`).modal('hide');
+            modal.dismiss()
+
           },
           (error) => {
             console.error('Error mengupdate data', error);
           }
         );
   
-  
-      this.titleInput.nativeElement.value = '';
-      this.bodyInput.nativeElement.value = '';
+
+      this.updatedPost.title = '';
+      this.updatedPost.body = '';
       this.showInput = false;
       this.selectedDataId = null; 
     } else {
